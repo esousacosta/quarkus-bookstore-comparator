@@ -1,11 +1,11 @@
 package com.iceskatinguphill;
 
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.Consumes;
+import jakarta.validation.constraints.Min;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.openapi.annotations.info.Info;
+import org.slf4j.ILoggerFactory;
 
 // Java SE
 import java.util.ArrayList;
@@ -22,5 +22,23 @@ public class BookResource {
         if (books == null)
             return Response.noContent().build();
         return Response.ok(Book.class, MediaType.APPLICATION_JSON).entity(books).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response getBook(@PathParam("id") @Min(1) long id) {
+        Book book = new Book();
+        return Response.ok(Book.class, MediaType.APPLICATION_JSON).entity(book).build();
+    }
+
+    @GET
+    @Path("/count")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response countBooks() {
+        int nbOfBooks = 0;
+        if (nbOfBooks == 0) {
+            return Response.noContent().build();
+        }
+        return Response.ok(nbOfBooks).build();
     }
 }

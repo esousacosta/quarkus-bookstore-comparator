@@ -1,8 +1,15 @@
 package com.iceskatinguphill;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import io.smallrye.common.constraint.NotNull;
+import jakarta.persistence.*;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * Example JPA entity.
@@ -23,10 +30,23 @@ import jakarta.persistence.Id;
  * }
  */
 @Entity
-public class Book {
-    @Id
-    @GeneratedValue
-    public Long id;
-
-    public String field;
+@Table(name = "T_BOOK")
+public class Book extends PanacheEntity{
+    @NotNull
+    public String title;
+    @Column(length = 13)
+    public String isbn;
+    @Size(min=1, max=20000)
+    @Column(length = 20000)
+    public String description;
+    @Min(1)
+    public BigDecimal price;
+    @Column(name = "image_url")
+    public String imageUrl;
+    @Past
+    @Column(name = "publication_date")
+    public LocalDate publicationDate;
+    @Min(10)
+    @Column(name = "nb_of_pages")
+    public Integer nbOfPages;
 }
