@@ -34,7 +34,7 @@ public class BookResource {
     @GET
     @Path("/{id}")
     public Response getBook(@PathParam("id") @Min(1) long id) {
-        Book book = new Book();
+        Book book = bookService.getBook(id);
         return Response.ok(Book.class, MediaType.APPLICATION_JSON).entity(book).build();
     }
 

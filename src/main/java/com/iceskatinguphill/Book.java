@@ -1,6 +1,10 @@
 package com.iceskatinguphill;
 
 import io.smallrye.common.constraint.NotNull;
+import jakarta.json.bind.annotation.JsonbDateFormat;
+import jakarta.json.bind.annotation.JsonbNumberFormat;
+import jakarta.json.bind.annotation.JsonbProperty;
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
@@ -37,16 +41,22 @@ public class Book extends PanacheEntity{
     @Column(length = 13)
     public String isbn;
     @Size(min=1, max=20000)
+    @JsonbTransient
     @Column(length = 20000)
     public String description;
     @Min(1)
+    @JsonbNumberFormat(value = "$#0.00")
     public BigDecimal price;
     @Column(name = "image_url")
+    @JsonbTransient
     public String imageUrl;
     @Past
     @Column(name = "publication_date")
+    @JsonbProperty("publication-date")
+    @JsonbDateFormat(value = "dd-MM-yyyy")
     public LocalDate publicationDate;
     @Min(10)
     @Column(name = "nb_of_pages")
+    @JsonbProperty("nb-of-pages")
     public Integer nbOfPages;
 }
