@@ -11,6 +11,7 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -35,6 +36,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "T_BOOK")
+@Schema(name = "Book", description = "POJO that represents a book")
 public class Book extends PanacheEntity{
     @NotNull
     public String title;
